@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>乘警信息</title>
+    <script type="text/javascript" src="/static/vue.js"></script>
+    <script type="text/javascript" src="/static/axios.js"></script>
+
+    <link href="/static/base/default.css" rel="stylesheet" />
+</head>
+
+<style type="text/css">
+
+    [v-cloak] {
+        display: none;
+    }
+    body{
+        background: url("/static/images/police/bg.png");
+        background-attachment: fixed;
+    }
+    .head{
+        width: 100%;
+        height: 25%;
+        text-align: center;
+        position:relative;
+    }
+    .menudiv{
+        background: url("/static/images/police/biankuang-no.png") no-repeat center top;
+        background-size: 100% 100%;
+        width: 120px;
+        height: 50px;
+        position: absolute;
+        top:25%;
+    }
+    .menu{
+        width: 100%;
+        height: 100%;
+        border:0px;
+        cursor:pointer;
+        background: none;
+        color: #ffffff;
+
+    }
+    .menu img{
+        width: 100%;
+    }
+
+    table td{
+
+    }
+    ul,li{
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+    }
+    .polCard{
+        /*background: linear-gradient(rgba(0,0,0,1), rgba(0,0,0,0), rgba(0,0,0,1));*/
+        background: url("/static/images/police/pbg.png") no-repeat center top;
+        background-size: 100% 100%;
+        position: relative;
+        width: 95%;
+        height:200px;
+        margin-left: 0;
+    }
+
+
+</style>
+
+<body>
+
+<div id="app" v-cloak>
+    <div class="head">
+        <img src="/static/images/police/top.png" style="width: 100%">
+        <!--        <button class="menu"><span style="display: block;">乘警信息</span></button>-->
+
+        <div class="menudiv" style="left: 5%;">
+            <!--            <a href="javascript:void(0);"><img src="/static/images/police/biankuang-no.png"></a>-->
+            <input type="button" class="menu" value="乘警信息" @Click="getData" />
+        </div>
+
+        <div class="menudiv" style="left: 16%;">
+            <input type="button" class="menu" value="装备管理" />
+        </div>
+
+        <div class="menudiv" style="left: 75%;">
+            <input type="button" class="menu" value="出警管理" />
+        </div>
+
+
+        <div class="menudiv" style="left: 86%;">
+            <input type="button" class="menu" value="指挥中心" />
+        </div>
+    </div>
+
+    <div  style="width: 90%;text-align: center;margin-top: 80px;text-align: left;margin-left: auto">
+        <div v-model="policeData" v-for="(item,index) in policeData"  style="float: left;width: 45%;height:200px;margin-top: 15px;margin-bottom: 10px">
+            <div class="polCard">
+                <img :src="baseHead + item.img" style="position: absolute;width: 120px;height: 144px;margin: 5% 5%;"/>
+                <div style="position: absolute;top:30px;left: 35%;color: #ffffff">
+                    <ul>姓名：{{item.name}}
+                        <li>警号：{{item.police_no}}</li>
+                        <li>日期：{{item.date}}</li>
+                        <li>时间：{{item.time}}</li>
+                        <li>状态：{{item.state}}</li>
+                        <li>车次：{{item.bus}}</li>
+                        <li>车站：{{item.stage}}</li>
+                    </ul>
+                </div>
+                <input type="button" value="酒精检测" style="position: absolute;top:30%;left: 65%;width: 120px;height: 42px;background-color: #0091f1;border: 0;color: #ffffff;font-size: 16px"/>
+                <span style="position: absolute;margin-top: 125px;margin-left: 74%;font-size: 14px;color: #ffffff">通过</span>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+</div>
+
+</body>
+<script src="/static/base/common.js"></script>
+<scrippt src="./base/list.js"></scrippt>
+<script src="/static/base/formvalidate.js"></script>
+<script src="/static/base/form.js"></script>
+<!-- <script src="/static/table2excel.js"></script> -->
+<script src="/static/exceljs.min.js"></script>
+
+<script>
+
+    //baseUrl = "http://localhost:8999/collection";
+
+    let vm = new Vue ({
+        el:"#app",
+        data:{
+            policeData:[],
+            baseHead:'data:image/jpeg;base64,',
+            isActive:false
+        },
+        mounted() {
+
+        },
+        created(){
+            this.getData();
+        },
+        methods: {
+            getData() {
+                axios.post('http://127.0.0.1:8866/take-police-test', {}).then(function (response) {
+                    this.policeData = [];
+                    this.policeData = response.data.data;
+                    vm.$set(vm, 'policeData', response.data.data);
+                    // Vue.set(this,'policeData',response.data.data);
+                    // this.$set(this,"policeData",response.data);
+
+                    // vm.$forceUpdate();
+                    console.log(this.policeData);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+        },
+    })
+
+
+</script>
+</html>

@@ -1,0 +1,33 @@
+﻿.fullscreen-frame {
+    width: 100%;
+    height: calc(100vh - 149px);
+}
+
+.fullscreen-frame-footer-hide {
+    width: 100%;
+    height: calc(100vh - 88px);
+}
+
+
+
+
+
+
+
+
+/***新增加部分****/
+
+.ivu-modal-header {
+    /*border-bottom: 1px solid #e9eaec;*/
+    border: 0;
+    background-image: url('/resources/images/list/win_titleBg_left.png');
+    background-repeat: no-repeat;
+    background-image: url('/resources/images/list/win_titleBg_left.png'),url('/resources/images/list/win_titleBg_mid.png');
+    background-repeat: no-repeat, repeat;
+    background-position: 0 0, 256px 0;
+    height: 35px;
+    padding: 7.5px 33px;
+    line-height: 1;
+}
+
+

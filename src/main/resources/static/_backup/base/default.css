@@ -1,0 +1,9 @@
+﻿.fullscreen-frame {
+    width: 100%;
+    height: calc(100vh - 149px);
+}
+
+.fullscreen-frame-footer-hide {
+    width: 100%;
+    height: calc(100vh - 88px);
+}
